@@ -78,7 +78,7 @@ class XInput
 
   def connected?
     XInput.state(@id)[:connected]
-  def
+  end
   
   def self.state(id)
     state = XINPUT_STATE.new
