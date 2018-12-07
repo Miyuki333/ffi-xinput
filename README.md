@@ -13,6 +13,11 @@ gem install ffi-xinput
 Usage
 ------
 
+Enable XInput support in your project:
+```
+require "ffi-xinput"
+```
+
 Create a new XInput controller instance:
 ```
 xinput = XInput.new(controller_id) #id can be 1-4
