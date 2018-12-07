@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'ffi-xinput'
-  s.version = '1.0.0'
+  s.version = '1.0.1'
   s.summary = 'An FFI wrapper for the XInput controller library.'
   s.authors = ['Allison Bailey']
   s.files = Dir['lib/ffi-xinput.rb']

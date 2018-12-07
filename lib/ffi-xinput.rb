@@ -36,6 +36,9 @@ module FFI::XInput
       :wRightMotorSpeed, :ushort
     
   end
+
+  ERROR_SUCCESS = 0x0000
+  ERROR_DEVICE_NOT_CONNECTED = 0x048F
   
   XINPUT_GAMEPAD_DPAD_UP	= 0x0001
   XINPUT_GAMEPAD_DPAD_DOWN	= 0x0002
@@ -66,8 +69,16 @@ class XInput
   end
   
   def state
-    return XInput.state(id)
+    XInput.state(@id)
   end
+
+  def vibrate(left = 0, right = 0)
+    XInput.vibrate(@id, left, right)
+  end
+
+  def connected?
+    XInput.state(@id)[:connected]
+  def
   
   def self.state(id)
     state = XINPUT_STATE.new
@@ -76,6 +87,7 @@ class XInput
     
     state = {}
     
+    state[:connected] = result == ERROR_SUCCESS
     state[:up] = gamepad[:wButtons] & XINPUT_GAMEPAD_DPAD_UP > 0
     state[:down] = gamepad[:wButtons] & XINPUT_GAMEPAD_DPAD_DOWN > 0
     state[:left] = gamepad[:wButtons] & XINPUT_GAMEPAD_DPAD_LEFT > 0
@@ -97,18 +109,19 @@ class XInput
     state[:right_thumb_x] = gamepad[:sThumbRX].to_f / 0x8000.to_f
     state[:right_thumb_y] = gamepad[:sThumbRY].to_f / 0x8000.to_f
     
-    return state
-  end
-  
-  def vibrate(left = 0, right = 0)
-    return XInput.vibrate(@id, left, right)
+    state
   end
 
   def self.vibrate(id, left = 0, right = 0)
     vibration = XINPUT_VIBRATION.new
     vibration[:wLeftMotorSpeed] = left * 0xFFFF
     vibration[:wRightMotorSpeed] = right * 0xFFFF
-    return XInputSetState(id, vibration)
+
+    XInputSetState(id, vibration)
   end
+
+  def self.connected?
+    self.state(@id)[:connected]
+  def
 
 end
