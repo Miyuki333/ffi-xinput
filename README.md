@@ -20,7 +20,7 @@ require "ffi-xinput"
 
 Create a new XInput controller instance:
 ```
-xinput = XInput.new(controller_id) #id can be 1-4
+xinput = XInput.new(controller_id) #id can be 0-3
 ```
 
 Check if a controller is connected:
